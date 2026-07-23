@@ -30,6 +30,10 @@ dotfiles/
 ├── shell/
 │   └── .bashrc.d/
 │       └── 20-prompt.sh
+├── zed/
+│   └── .config/
+│       └── zed/
+│           └── settings.json
 ├── AGENTS.md
 ├── README.md
 └── .gitignore
@@ -38,12 +42,12 @@ dotfiles/
 For example, Stow links
 `sway/.config/sway/config` to `~/.config/sway/config`.
 
-The currently managed packages are `sway`, `alacritty`, `rofi`, and `shell`.
-Likely future packages, created only when their configuration is reviewed, are:
+The currently managed packages are `sway`, `alacritty`, `rofi`, `shell`, and
+`zed`. Likely future packages, created only when their configuration is
+reviewed, are:
 
 ```text
 waybar/    # ~/.config/waybar/
-zed/       # ~/.config/zed/
 git/       # ~/.gitconfig, if a portable configuration is desired
 ```
 
@@ -54,8 +58,8 @@ application's configuration without affecting the others.
 
 This repository was initialized on Fedora Linux 44 Sway Spin.
 
-- Sway, Alacritty, Rofi, and a Bash prompt fragment are deployed as separate
-  Stow packages.
+- Sway, Alacritty, Rofi, Zed settings, and a Bash prompt fragment are deployed
+  as separate Stow packages.
 - `~/.config/sway/config` is a relative symlink into this repository.
 - The Sway file is based on Fedora's main config. Its intentional changes are a
   GB keyboard layout and a user wallpaper path.
@@ -70,8 +74,8 @@ This repository was initialized on Fedora Linux 44 Sway Spin.
   icon-patched Nerd Font variant.
 - The standard Bash startup files currently match `/etc/skel` and are not
   managed.
-- Zed has an existing, unmanaged `~/.config/zed/settings.json`. It should be
-  reviewed before it is moved into a future `zed` package.
+- Zed's portable `settings.json` is managed. Mutable Zed state and credentials
+  remain outside the repository.
 - Other files under `~/.config` currently belong to applications or are
   generated state. In particular, browser profiles, `dconf`, PulseAudio
   cookies, histories, caches, and databases must not be copied into this
