@@ -1,0 +1,14 @@
+configuration {
+    modes: "combi";
+    combi-modes: "drun,run";
+    combi-display-format: "{text}";
+    display-combi: "Launch";
+
+    terminal: "alacritty";
+    font: "JetBrainsMono Nerd Font Mono 10";
+    show-icons: true;
+    matching: "fuzzy";
+    drun-display-format: "{name}";
+}
+
+@theme "theme"

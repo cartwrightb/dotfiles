@@ -1,0 +1,69 @@
+* {
+    background: #111318;
+    background-alt: #1b1f27;
+    foreground: #d4d4d4;
+    muted: #7d8590;
+    accent: #3b82b3;
+    selected: #244b66;
+
+    background-color: transparent;
+    text-color: @foreground;
+    spacing: 0;
+}
+
+window {
+    width: 28em;
+    padding: 0.6em;
+    border: 1px;
+    border-color: @accent;
+    border-radius: 8px;
+    background-color: @background;
+}
+
+mainbox {
+    children: [ inputbar, listview ];
+    spacing: 0.4em;
+}
+
+inputbar {
+    children: [ prompt, entry ];
+    spacing: 0.5em;
+    padding: 0.45em;
+    border-radius: 6px;
+    background-color: @background-alt;
+}
+
+prompt {
+    text-color: @accent;
+}
+
+entry {
+    placeholder: "Search applications and commands";
+    placeholder-color: @muted;
+}
+
+listview {
+    lines: 5;
+    columns: 1;
+    fixed-height: false;
+    scrollbar: false;
+    spacing: 0.1em;
+}
+
+element {
+    padding: 0.35em;
+    spacing: 0.5em;
+    border-radius: 6px;
+}
+
+element selected {
+    background-color: @selected;
+}
+
+element-icon {
+    size: 1.1em;
+}
+
+element-text {
+    vertical-align: 0.5;
+}

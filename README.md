@@ -18,6 +18,18 @@ dotfiles/
 │   └── .config/
 │       └── sway/
 │           └── config
+├── alacritty/
+│   └── .config/
+│       └── alacritty/
+│           └── alacritty.toml
+├── rofi/
+│   └── .config/
+│       └── rofi/
+│           ├── config.rasi
+│           └── theme.rasi
+├── shell/
+│   └── .bashrc.d/
+│       └── 20-prompt.sh
 ├── AGENTS.md
 ├── README.md
 └── .gitignore
@@ -26,14 +38,12 @@ dotfiles/
 For example, Stow links
 `sway/.config/sway/config` to `~/.config/sway/config`.
 
-Only `sway` is managed today. Likely future packages, created only when their
-configuration is reviewed, are:
+The currently managed packages are `sway`, `alacritty`, `rofi`, and `shell`.
+Likely future packages, created only when their configuration is reviewed, are:
 
 ```text
 waybar/    # ~/.config/waybar/
-foot/      # ~/.config/foot/
 zed/       # ~/.config/zed/
-shell/     # ~/.bashrc, ~/.bash_profile, and related shell files
 git/       # ~/.gitconfig, if a portable configuration is desired
 ```
 
@@ -44,7 +54,8 @@ application's configuration without affecting the others.
 
 This repository was initialized on Fedora Linux 44 Sway Spin.
 
-- `sway` is the only currently deployed Stow package.
+- Sway, Alacritty, Rofi, and a Bash prompt fragment are deployed as separate
+  Stow packages.
 - `~/.config/sway/config` is a relative symlink into this repository.
 - The Sway file is based on Fedora's main config. Its intentional changes are a
   GB keyboard layout and a user wallpaper path.
@@ -52,7 +63,11 @@ This repository was initialized on Fedora Linux 44 Sway Spin.
   must supply that file or later replace the setting with a portable choice.
 - Waybar has no user configuration and inherits
   `/etc/xdg/waybar/config.jsonc` and `/etc/xdg/waybar/style.css`.
-- Foot has no user configuration and inherits `/etc/xdg/foot/foot.ini`.
+- Alacritty is the configured terminal. Foot remains installed with no user
+  configuration and inherits `/etc/xdg/foot/foot.ini`.
+- Alacritty and Rofi use `JetBrainsMono Nerd Font Mono`, installed separately
+  as a user-local font because Fedora's JetBrains Mono package is not the
+  icon-patched Nerd Font variant.
 - The standard Bash startup files currently match `/etc/skel` and are not
   managed.
 - Zed has an existing, unmanaged `~/.config/zed/settings.json`. It should be
@@ -105,15 +120,13 @@ Required by the current Sway configuration:
 - the utilities required or recommended by Fedora's Sway snippets, normally
   supplied by the Sway Spin
 
-The current config names `rofi` as its launcher, but `rofi-wayland` was not
-installed during the initial audit. This is a known baseline gap, not something
-this repository installs automatically.
+Fedora 44's `rofi` 2.x package includes the native Wayland backend and replaces
+the former separately named `rofi-wayland` package.
 
 Check availability without changing the system:
 
 ```bash
-rpm -q git stow sway sway-config-fedora sway-systemd foot waybar
-command -v rofi
+rpm -q git stow sway sway-config-fedora sway-systemd alacritty rofi waybar
 ```
 
 Install or system-bootstrap commands are intentionally not automated. Review
@@ -209,4 +222,3 @@ is preferred when private local configuration needs documentation.
 - Do not introduce aesthetic changes until they have been reviewed separately.
 
 Contributor and automation rules are recorded in [AGENTS.md](AGENTS.md).
-

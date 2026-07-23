@@ -15,7 +15,7 @@ Keep the result small, understandable, and reproducible.
 - Home-directory files such as `.bashrc` belong at the root of their package.
 - Repository documentation and metadata (`README.md`, `AGENTS.md`,
   `.gitignore`) are not Stow packages.
-- The current package is `sway`.
+- Current packages are `sway`, `alacritty`, `rofi`, and `shell`.
 - Add a package only when there is real user configuration to manage. Do not
   create placeholder package directories.
 
@@ -114,4 +114,3 @@ Unstowing removes managed symlinks; it does not uninstall the application.
   "$HOME/.config/sway/config"` from a suitable graphical session, then reload
   only when the user has requested an active configuration change.
 - Document any validation that could not run and why.
-
