@@ -81,10 +81,9 @@ This repository was initialized on Fedora Linux 44 Sway Spin.
   cookies, histories, caches, and databases must not be copied into this
   repository.
 
-The repository currently lives at `~/Repos/dotfiles` (capital `R`), while the
-intended long-term path stated for it is `~/repos/dotfiles`. Paths are
-case-sensitive. Relocate only deliberately: unstow packages before moving the
-repository, then restow them from the new location.
+The repository lives at `~/repos/dotfiles`. Paths are case-sensitive. If it is
+relocated again, unstow packages before moving the repository, then restow them
+from the new location.
 
 ## How Fedora's Sway Configuration Works
 
