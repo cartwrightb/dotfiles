@@ -1,0 +1,34 @@
+# Editor and operating-system noise
+*~
+*.swp
+*.swo
+.DS_Store
+
+# Local/private overrides (commit a sanitized *.example instead)
+*.local
+*.private
+.env
+.env.*
+!.env.example
+
+# Credentials and private keys
+credentials
+credentials.*
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_rsa_*
+id_ed25519
+id_ed25519_*
+
+# Generated user state that should never become a Stow package
+**/.cache/
+**/.local/state/
+**/.bash_history
+**/.zsh_history
+**/.python_history
+**/.config/pulse/cookie
+**/.config/dconf/user
+
