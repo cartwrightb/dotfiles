@@ -6,6 +6,7 @@
 
 # Local/private overrides (commit a sanitized *.example instead)
 *.local
+!brave/.local/
 *.private
 .env
 .env.*
@@ -31,4 +32,3 @@ id_ed25519_*
 **/.python_history
 **/.config/pulse/cookie
 **/.config/dconf/user
-

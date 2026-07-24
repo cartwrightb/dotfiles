@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Name=Brave Private
+GenericName=Private Web Browser
+Comment=Browse in a private Brave window
+Icon=brave-browser
+Exec=brave-browser --incognito %U
+Terminal=false
+StartupNotify=true
+Categories=Network;WebBrowser;
+MimeType=x-scheme-handler/http;x-scheme-handler/https;
+Actions=new-private-window;
+
+[Desktop Action new-private-window]
+Name=New Private Window
+Exec=brave-browser --incognito

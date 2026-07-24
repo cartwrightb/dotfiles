@@ -34,6 +34,11 @@ dotfiles/
 │   └── .config/
 │       └── zed/
 │           └── settings.json
+├── brave/
+│   └── .local/
+│       └── share/
+│           └── applications/
+│               └── brave-private.desktop
 ├── AGENTS.md
 ├── README.md
 └── .gitignore
@@ -58,8 +63,8 @@ application's configuration without affecting the others.
 
 This repository was initialized on Fedora Linux 44 Sway Spin.
 
-- Sway, Alacritty, Rofi, Zed settings, and a Bash prompt fragment are deployed
-  as separate Stow packages.
+- Sway, Alacritty, Rofi, Zed settings, a Brave private-window launcher, and a
+  Bash prompt fragment are deployed as separate Stow packages.
 - `~/.config/sway/config` is a relative symlink into this repository.
 - The Sway file is based on Fedora's main config. Its intentional changes are a
   GB keyboard layout and a user wallpaper path.
@@ -76,6 +81,9 @@ This repository was initialized on Fedora Linux 44 Sway Spin.
   managed.
 - Zed's portable `settings.json` is managed. Mutable Zed state and credentials
   remain outside the repository.
+- Brave is installed separately from its official Fedora repository. The
+  managed `Brave Private` desktop entry always launches it with `--incognito`;
+  the browser profile, extensions, and other mutable state remain untracked.
 - Other files under `~/.config` currently belong to applications or are
   generated state. In particular, browser profiles, `dconf`, PulseAudio
   cookies, histories, caches, and databases must not be copied into this
@@ -180,6 +188,30 @@ stow --verbose=1 --target="$HOME" foot waybar
 ```
 
 Explicit package names keep restoration controlled and reviewable.
+
+## Brave Private Browser
+
+Brave itself is not stored in this repository. On Fedora 41 or newer, install
+the native package from Brave's official repository:
+
+```bash
+sudo dnf config-manager addrepo \
+  --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+sudo dnf install brave-browser
+```
+
+Deploy the private-window launcher:
+
+```bash
+stow --no --verbose=2 --target="$HOME" brave
+stow --verbose=1 --target="$HOME" brave
+```
+
+`Brave Private` then appears in the application launcher and always invokes
+Brave with `--incognito`. Install Bitwarden from the Chrome Web Store, visit
+`brave://extensions`, open Bitwarden's details, and enable **Allow in
+Incognito**. Browser profiles, extension data, credentials, and browsing state
+remain local and untracked.
 
 ## Restore, Update, and Remove
 
