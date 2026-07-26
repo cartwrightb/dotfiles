@@ -1,0 +1,99 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 26,
+    "spacing": 0,
+
+    "modules-left": [
+        "sway/workspaces"
+    ],
+    "modules-center": [
+        "sway/window"
+    ],
+    "modules-right": [
+        "cpu",
+        "memory",
+        "network",
+        "pulseaudio",
+        "battery",
+        "clock"
+    ],
+
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "format": "{name}"
+    },
+
+    "sway/window": {
+        "format": "{}",
+        "max-length": 60,
+        "tooltip": false
+    },
+
+    "cpu": {
+        "interval": 5,
+        "format": "<span size='x-large'></span> {usage}%",
+        "tooltip-format": "CPU usage: {usage}%"
+    },
+
+    "memory": {
+        "interval": 5,
+        "format": "<span size='x-large'></span> {percentage}%",
+        "tooltip-format": "Memory: {used:0.1f} GiB / {total:0.1f} GiB"
+    },
+
+    "network": {
+        "format-wifi": "<span size='x-large'></span> {essid}",
+        "format-ethernet": "<span size='x-large'>󰈀</span> {ifname}",
+        "format-linked": "<span size='x-large'>󰈀</span> {ifname}",
+        "format-disconnected": "<span size='x-large'>󰖪</span> disconnected",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+        "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr}",
+        "tooltip-format-disconnected": "Network disconnected",
+        "on-click": "nm-connection-editor"
+    },
+
+    "pulseaudio": {
+        "scroll-step": 5,
+        "format": "{icon} {volume}%",
+        "format-muted": "<span size='x-large'></span> muted",
+        "format-icons": {
+            "headphone": "<span size='x-large'></span>",
+            "headset": "<span size='x-large'></span>",
+            "default": [
+                "<span size='x-large'></span>",
+                "<span size='x-large'></span>",
+                "<span size='x-large'></span>"
+            ]
+        },
+        "tooltip-format": "{desc}",
+        "on-click": "pavucontrol",
+        "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+    },
+
+    "battery": {
+        "interval": 30,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "<span size='x-large'></span> {capacity}%",
+        "format-plugged": "<span size='x-large'></span> {capacity}%",
+        "format-icons": [
+            "<span size='x-large'></span>",
+            "<span size='x-large'></span>",
+            "<span size='x-large'></span>",
+            "<span size='x-large'></span>",
+            "<span size='x-large'></span>"
+        ],
+        "tooltip-format": "{time} remaining"
+    },
+
+    "clock": {
+        "interval": 60,
+        "format": "<span size='x-large'></span> {:%a %d/%m/%Y  %H:%M}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "on-click": "xdg-open https://calendar.google.com/"
+    }
+}

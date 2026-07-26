@@ -30,6 +30,11 @@ dotfiles/
 ├── shell/
 │   └── .bashrc.d/
 │       └── 20-prompt.sh
+├── waybar/
+│   └── .config/
+│       └── waybar/
+│           ├── config.jsonc
+│           └── style.css
 ├── zed/
 │   └── .config/
 │       └── zed/
@@ -47,12 +52,11 @@ dotfiles/
 For example, Stow links
 `sway/.config/sway/config` to `~/.config/sway/config`.
 
-The currently managed packages are `sway`, `alacritty`, `rofi`, `shell`, and
-`zed`. Likely future packages, created only when their configuration is
-reviewed, are:
+The currently managed packages are `sway`, `alacritty`, `brave`, `rofi`,
+`shell`, `waybar`, and `zed`. Likely future packages, created only when their
+configuration is reviewed, are:
 
 ```text
-waybar/    # ~/.config/waybar/
 git/       # ~/.gitconfig, if a portable configuration is desired
 ```
 
@@ -63,15 +67,15 @@ application's configuration without affecting the others.
 
 This repository was initialized on Fedora Linux 44 Sway Spin.
 
-- Sway, Alacritty, Rofi, Zed settings, a Brave private-window launcher, and a
-  Bash prompt fragment are deployed as separate Stow packages.
+- Sway, Alacritty, Rofi, Waybar, Zed settings, a Brave private-window
+  launcher, and a Bash prompt fragment are deployed as separate Stow packages.
 - `~/.config/sway/config` is a relative symlink into this repository.
 - The Sway file is based on Fedora's main config. Its intentional changes are a
   GB keyboard layout and a user wallpaper path.
 - The referenced wallpaper is not tracked. It is local data, so a fresh machine
   must supply that file or later replace the setting with a portable choice.
-- Waybar has no user configuration and inherits
-  `/etc/xdg/waybar/config.jsonc` and `/etc/xdg/waybar/style.css`.
+- Waybar uses a compact, monochrome user configuration. Fedora's defaults
+  remain available under `/etc/xdg/waybar/` for reference.
 - Alacritty is the configured terminal. Foot remains installed with no user
   configuration and inherits `/etc/xdg/foot/foot.ini`.
 - Alacritty and Rofi use `JetBrainsMono Nerd Font Mono`, installed separately
@@ -126,8 +130,12 @@ Required by the current Sway configuration:
 
 - Sway and Fedora's `sway-config-fedora`
 - `sway-systemd`
-- Foot
+- Alacritty
 - Waybar
+- Rofi
+- JetBrainsMono Nerd Font Mono, installed as a user-local font
+- `pavucontrol`, `nm-connection-editor`, and `xdg-utils` for
+  Waybar's click actions
 - the utilities required or recommended by Fedora's Sway snippets, normally
   supplied by the Sway Spin
 
@@ -137,7 +145,8 @@ the former separately named `rofi-wayland` package.
 Check availability without changing the system:
 
 ```bash
-rpm -q git stow sway sway-config-fedora sway-systemd alacritty rofi waybar
+rpm -q git stow sway sway-config-fedora sway-systemd alacritty rofi waybar \
+  pavucontrol nm-connection-editor xdg-utils
 ```
 
 Install or system-bootstrap commands are intentionally not automated. Review
@@ -180,11 +189,13 @@ the graphical session:
 sway --validate --config "$HOME/.config/sway/config"
 ```
 
-To deploy future packages, name them explicitly:
+To deploy all current packages, name them explicitly:
 
 ```bash
-stow --no --verbose=2 --target="$HOME" foot waybar
-stow --verbose=1 --target="$HOME" foot waybar
+stow --no --verbose=2 --target="$HOME" \
+  alacritty brave rofi shell sway waybar zed
+stow --verbose=1 --target="$HOME" \
+  alacritty brave rofi shell sway waybar zed
 ```
 
 Explicit package names keep restoration controlled and reviewable.
