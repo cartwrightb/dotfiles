@@ -67,6 +67,11 @@ input type:touchpad {
     natural_scroll enabled
 }
 
+### Window colours
+#
+# Keep the standard Sway palette, with a softer slate blue for focused windows.
+client.focused #526b7f #344b5e #f0f0f0 #6f899d #344b5e
+
 ### Key bindings
 #
 # Basics:

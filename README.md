@@ -70,8 +70,9 @@ This repository was initialized on Fedora Linux 44 Sway Spin.
 - Sway, Alacritty, Rofi, Waybar, Zed settings, a Brave private-window
   launcher, and a Bash prompt fragment are deployed as separate Stow packages.
 - `~/.config/sway/config` is a relative symlink into this repository.
-- The Sway file is based on Fedora's main config. Its intentional changes are a
-  GB keyboard layout and a user wallpaper path.
+- The Sway file is based on Fedora's main config. Its intentional changes
+  select Alacritty and Rofi, set a GB keyboard layout, enable natural touchpad
+  scrolling, use a local wallpaper, and soften the focused-window blue.
 - The referenced wallpaper is not tracked. It is local data, so a fresh machine
   must supply that file or later replace the setting with a portable choice.
 - Waybar uses a compact, monochrome user configuration. Fedora's defaults
