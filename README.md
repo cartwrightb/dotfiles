@@ -97,8 +97,8 @@ This repository was initialized on Fedora Linux 44 Sway Spin.
 - `~/.config/sway/config` is a relative symlink into this repository.
 - The Sway file is based on Fedora's main config. Its intentional changes
   select Alacritty and Rofi, set a GB keyboard layout, enable natural touchpad
-  scrolling, use a local wallpaper, soften the focused-window blue, and add
-  ergonomic lock and screenshot-to-clipboard shortcuts.
+  scrolling at half speed, use a local wallpaper, soften the focused-window
+  blue, and add ergonomic lock and screenshot-to-clipboard shortcuts.
 - The referenced wallpaper is not tracked. It is local data, so a fresh machine
   must supply that file or later replace the setting with a portable choice.
 - Swaylock uses the same local wallpaper and otherwise inherits its normal

@@ -65,6 +65,7 @@ input type:keyboard {
 }
 input type:touchpad {
     natural_scroll enabled
+    scroll_factor 0.5
 }
 
 ### Window colours
