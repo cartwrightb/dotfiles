@@ -30,6 +30,7 @@ dotfiles/
 │           ├── config.rasi
 │           └── theme.rasi
 ├── shell/
+│   ├── .bash_profile
 │   └── .bashrc.d/
 │       ├── 20-prompt.sh
 │       └── 30-aliases.sh
@@ -102,9 +103,10 @@ This repository was initialized on Fedora Linux 44 Sway Spin.
 - Alacritty and Rofi use `JetBrainsMono Nerd Font Mono`, installed separately
   as a user-local font because Fedora's JetBrains Mono package is not the
   icon-patched Nerd Font variant.
-- The standard Bash startup files currently match `/etc/skel` and are not
-  managed. Small prompt and alias fragments are managed under `~/.bashrc.d`;
-  `ll` expands to `ls -lah`.
+- Bash keeps Fedora's standard startup behavior. The managed `.bash_profile`
+  additionally starts Fedora's `start-sway` launcher after a login on TTY 1;
+  graphical, SSH, and other TTY sessions are left alone. Small prompt and
+  alias fragments are managed under `~/.bashrc.d`; `ll` expands to `ls -lah`.
 - GTK applications use the built-in dark Adwaita variant. The package records
   both the GTK 3 preference and a user `environment.d` override because an
   XSettings source can otherwise override `settings.ini` in a Sway session.
@@ -249,6 +251,32 @@ stow --verbose=1 --target="$HOME" \
 ```
 
 Explicit package names keep restoration controlled and reviewable.
+
+## Optional TTY Login
+
+The managed `.bash_profile` runs Fedora's `start-sway` launcher automatically
+after this user logs in on TTY 1. It checks that no graphical session already
+exists, so SSH sessions and logins on other virtual consoles remain normal
+shells.
+
+This user configuration does not disable a display manager or change Fedora's
+default boot target. To deliberately use terminal login instead of SDDM:
+
+```bash
+sudo systemctl disable sddm.service
+sudo systemctl set-default multi-user.target
+```
+
+After rebooting, log in on TTY 1 and Sway starts automatically. Restore Fedora's
+graphical login with:
+
+```bash
+sudo systemctl set-default graphical.target
+sudo systemctl enable --force sddm.service
+```
+
+These are manual system-wide operations and are intentionally not automated by
+the repository.
 
 ## Brave Private Browser
 
