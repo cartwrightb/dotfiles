@@ -17,7 +17,9 @@ dotfiles/
 ├── sway/
 │   └── .config/
 │       └── sway/
-│           └── config
+│           ├── config
+│           └── config.d/
+│               └── 60-bindings-screenshot.conf
 ├── alacritty/
 │   └── .config/
 │       └── alacritty/
@@ -29,11 +31,18 @@ dotfiles/
 │           └── theme.rasi
 ├── shell/
 │   └── .bashrc.d/
-│       └── 20-prompt.sh
+│       ├── 20-prompt.sh
+│       └── 30-aliases.sh
 ├── gtk/
 │   └── .config/
+│       ├── environment.d/
+│       │   └── 20-gtk-theme.conf
 │       └── gtk-3.0/
 │           └── settings.ini
+├── tmux/
+│   └── .config/
+│       └── tmux/
+│           └── tmux.conf
 ├── waybar/
 │   └── .config/
 │       └── waybar/
@@ -59,8 +68,8 @@ For example, Stow links
 `sway/.config/sway/config` to `~/.config/sway/config`.
 
 The currently managed packages are `sway`, `alacritty`, `brave`, `gtk`,
-`rofi`, `shell`, `waybar`, and `zed`. Likely future packages, created only
-when their configuration is reviewed, are:
+`rofi`, `shell`, `tmux`, `waybar`, and `zed`. Likely future packages, created
+only when their configuration is reviewed, are:
 
 ```text
 git/       # ~/.gitconfig, if a portable configuration is desired
@@ -94,12 +103,16 @@ This repository was initialized on Fedora Linux 44 Sway Spin.
   as a user-local font because Fedora's JetBrains Mono package is not the
   icon-patched Nerd Font variant.
 - The standard Bash startup files currently match `/etc/skel` and are not
-  managed.
+  managed. Small prompt and alias fragments are managed under `~/.bashrc.d`;
+  `ll` expands to `ls -lah`.
 - GTK applications use the built-in dark Adwaita variant. The package records
   both the GTK 3 preference and a user `environment.d` override because an
   XSettings source can otherwise override `settings.ini` in a Sway session.
   This keeps applications such as Thunar dark without tracking Xfce's
   generated state.
+- Tmux keeps the established `Ctrl+A`, Vim-style navigation, copy-mode, and
+  one-based window workflow. Its compact status bar reuses the Sway and Waybar
+  palette without requiring plugins.
 - Zed's portable `settings.json` is managed. Mutable Zed state and credentials
   remain outside the repository.
 - Brave is installed separately from its official Fedora repository. The
@@ -162,13 +175,14 @@ Required to deploy the repository:
 - GNU Stow
 - Git
 
-Required by the current Sway configuration:
+Required by the current managed configuration:
 
 - Sway and Fedora's `sway-config-fedora`
 - `sway-systemd`
 - Alacritty
 - Waybar
 - Rofi
+- Tmux
 - JetBrainsMono Nerd Font Mono, installed as a user-local font
 - `pavucontrol`, `nm-connection-editor`, and `xdg-utils` for
   Waybar's click actions
@@ -181,7 +195,7 @@ the former separately named `rofi-wayland` package.
 Check availability without changing the system:
 
 ```bash
-rpm -q git stow sway sway-config-fedora sway-systemd alacritty rofi waybar \
+rpm -q git stow sway sway-config-fedora sway-systemd alacritty rofi tmux waybar \
   pavucontrol nm-connection-editor xdg-utils
 ```
 
@@ -229,9 +243,9 @@ To deploy all current packages, name them explicitly:
 
 ```bash
 stow --no --verbose=2 --target="$HOME" \
-  alacritty brave gtk rofi shell sway waybar zed
+  alacritty brave gtk rofi shell sway tmux waybar zed
 stow --verbose=1 --target="$HOME" \
-  alacritty brave gtk rofi shell sway waybar zed
+  alacritty brave gtk rofi shell sway tmux waybar zed
 ```
 
 Explicit package names keep restoration controlled and reviewable.

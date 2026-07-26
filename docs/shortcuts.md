@@ -128,9 +128,46 @@ work while the screen is locked where Fedora marks them as locked bindings.
 | Volume | Right-click to toggle mute |
 | Date and time | Left-click to open Google Calendar |
 
+## Tmux
+
+The tmux prefix is `Ctrl+A`. In the tables below, `Prefix` means press
+`Ctrl+A`, release it, then press the following key.
+
+### Sessions, windows, and configuration
+
+| Shortcut | Action |
+| --- | --- |
+| `Prefix Ctrl+A` | Send `Ctrl+A` to the active program |
+| `Prefix R` | Reload `~/.config/tmux/tmux.conf` |
+| `Shift+Left/Right` | Select the previous/next window |
+| `Alt+1` … `Alt+9` | Select window 1–9 |
+
+### Panes
+
+| Shortcut | Action |
+| --- | --- |
+| `Prefix =` or `Prefix V` | Split horizontally |
+| `Prefix -` or `Prefix S` | Split vertically |
+| `Prefix H/J/K/L` | Select the pane left/down/up/right |
+| `Alt+H/J/K/L` | Select the pane left/down/up/right without the prefix |
+
+New splits inherit the active pane's working directory.
+
+### Copy mode
+
+Tmux uses Vim-style copy-mode keys. Enter copy mode with the standard
+`Prefix+[`.
+
+| Shortcut in copy mode | Action |
+| --- | --- |
+| `V` | Begin selection |
+| `Ctrl+V` | Toggle rectangular selection |
+| `Y` | Copy the selection and leave copy mode |
+
+Mouse support and terminal clipboard integration are enabled.
+
 ## Future application shortcuts
 
-Application-specific bindings such as Tmux can remain in this file under their
-own top-level sections. Split them into separate files under `docs/shortcuts/`
+Additional application bindings can remain in this file under their own
+top-level sections. Split them into separate files under `docs/shortcuts/`
 only if this reference becomes difficult to scan.
-
