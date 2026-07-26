@@ -44,6 +44,8 @@ dotfiles/
 │       └── share/
 │           └── applications/
 │               └── brave-private.desktop
+├── docs/
+│   └── shortcuts.md
 ├── AGENTS.md
 ├── README.md
 └── .gitignore
@@ -63,6 +65,10 @@ git/       # ~/.gitconfig, if a portable configuration is desired
 Keeping these independent makes it possible to deploy, review, or remove one
 application's configuration without affecting the others.
 
+The current Sway, screenshot, hardware/media, and Waybar controls are collected
+in [docs/shortcuts.md](docs/shortcuts.md). Application-specific sections such
+as Tmux can be added there as the setup grows.
+
 ## Current Baseline
 
 This repository was initialized on Fedora Linux 44 Sway Spin.
@@ -72,7 +78,8 @@ This repository was initialized on Fedora Linux 44 Sway Spin.
 - `~/.config/sway/config` is a relative symlink into this repository.
 - The Sway file is based on Fedora's main config. Its intentional changes
   select Alacritty and Rofi, set a GB keyboard layout, enable natural touchpad
-  scrolling, use a local wallpaper, and soften the focused-window blue.
+  scrolling, use a local wallpaper, soften the focused-window blue, and add
+  ergonomic screenshot-to-clipboard shortcuts.
 - The referenced wallpaper is not tracked. It is local data, so a fresh machine
   must supply that file or later replace the setting with a portable choice.
 - Waybar uses a compact, monochrome user configuration. Fedora's defaults
@@ -118,6 +125,25 @@ snippets have been added yet.
 
 This layering is deliberately preserved so Fedora integration continues to
 receive package updates.
+
+## Screenshots
+
+The user-layer `60-bindings-screenshot.conf` preserves Fedora's save behavior
+and adds clipboard shortcuts that avoid the laptop's Fn-layer Print key:
+
+```text
+Print          Save active output
+Alt+Print      Save active window
+Ctrl+Print     Save selected area
+
+Super+Shift+S  Copy selected area
+Super+Shift+W  Copy active window
+Super+Shift+O  Copy active output
+```
+
+Saved captures go to `~/Pictures/Screenshots`. The save command creates that
+directory if it is missing. Clipboard captures can be pasted directly into
+applications that accept PNG image data.
 
 ## Dependencies
 
