@@ -15,7 +15,7 @@ Keep the result small, understandable, and reproducible.
 - Home-directory files such as `.bashrc` belong at the root of their package.
 - Repository documentation and metadata (`README.md`, `AGENTS.md`,
   `.gitignore`) are not Stow packages.
-- Current packages are `sway`, `alacritty`, `brave`, `rofi`, `shell`,
+- Current packages are `sway`, `alacritty`, `brave`, `gtk`, `rofi`, `shell`,
   `waybar`, and `zed`.
 - Add a package only when there is real user configuration to manage. Do not
   create placeholder package directories.

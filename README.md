@@ -30,6 +30,10 @@ dotfiles/
 ├── shell/
 │   └── .bashrc.d/
 │       └── 20-prompt.sh
+├── gtk/
+│   └── .config/
+│       └── gtk-3.0/
+│           └── settings.ini
 ├── waybar/
 │   └── .config/
 │       └── waybar/
@@ -54,9 +58,9 @@ dotfiles/
 For example, Stow links
 `sway/.config/sway/config` to `~/.config/sway/config`.
 
-The currently managed packages are `sway`, `alacritty`, `brave`, `rofi`,
-`shell`, `waybar`, and `zed`. Likely future packages, created only when their
-configuration is reviewed, are:
+The currently managed packages are `sway`, `alacritty`, `brave`, `gtk`,
+`rofi`, `shell`, `waybar`, and `zed`. Likely future packages, created only
+when their configuration is reviewed, are:
 
 ```text
 git/       # ~/.gitconfig, if a portable configuration is desired
@@ -91,6 +95,11 @@ This repository was initialized on Fedora Linux 44 Sway Spin.
   icon-patched Nerd Font variant.
 - The standard Bash startup files currently match `/etc/skel` and are not
   managed.
+- GTK applications use the built-in dark Adwaita variant. The package records
+  both the GTK 3 preference and a user `environment.d` override because an
+  XSettings source can otherwise override `settings.ini` in a Sway session.
+  This keeps applications such as Thunar dark without tracking Xfce's
+  generated state.
 - Zed's portable `settings.json` is managed. Mutable Zed state and credentials
   remain outside the repository.
 - Brave is installed separately from its official Fedora repository. The
@@ -220,9 +229,9 @@ To deploy all current packages, name them explicitly:
 
 ```bash
 stow --no --verbose=2 --target="$HOME" \
-  alacritty brave rofi shell sway waybar zed
+  alacritty brave gtk rofi shell sway waybar zed
 stow --verbose=1 --target="$HOME" \
-  alacritty brave rofi shell sway waybar zed
+  alacritty brave gtk rofi shell sway waybar zed
 ```
 
 Explicit package names keep restoration controlled and reviewable.
