@@ -16,6 +16,7 @@ Laptop media, brightness, and Print keys may also require `Fn`.
 | --- | --- | --- |
 | `Super+Enter` | Open Alacritty | Repository |
 | `Super+D` | Open Rofi | Repository |
+| `Super+Escape` | Lock the screen | Repository |
 | `Super+Shift+Q` | Close the focused window | Fedora main config |
 | `Super+Shift+C` | Reload Sway | Fedora main config |
 | `Super+Shift+E` | Show the exit confirmation | Fedora main config |

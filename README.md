@@ -19,6 +19,7 @@ dotfiles/
 │       └── sway/
 │           ├── config
 │           └── config.d/
+│               ├── 60-bindings-lock.conf
 │               └── 60-bindings-screenshot.conf
 ├── alacritty/
 │   └── .config/
@@ -93,7 +94,7 @@ This repository was initialized on Fedora Linux 44 Sway Spin.
 - The Sway file is based on Fedora's main config. Its intentional changes
   select Alacritty and Rofi, set a GB keyboard layout, enable natural touchpad
   scrolling, use a local wallpaper, soften the focused-window blue, and add
-  ergonomic screenshot-to-clipboard shortcuts.
+  ergonomic lock and screenshot-to-clipboard shortcuts.
 - The referenced wallpaper is not tracked. It is local data, so a fresh machine
   must supply that file or later replace the setting with a portable choice.
 - Waybar uses a compact, monochrome user configuration. Fedora's defaults
