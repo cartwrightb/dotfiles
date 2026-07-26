@@ -21,6 +21,10 @@ dotfiles/
 │           └── config.d/
 │               ├── 60-bindings-lock.conf
 │               └── 60-bindings-screenshot.conf
+├── swaylock/
+│   └── .config/
+│       └── swaylock/
+│           └── config
 ├── alacritty/
 │   └── .config/
 │       └── alacritty/
@@ -69,9 +73,9 @@ dotfiles/
 For example, Stow links
 `sway/.config/sway/config` to `~/.config/sway/config`.
 
-The currently managed packages are `sway`, `alacritty`, `brave`, `gtk`,
-`rofi`, `shell`, `tmux`, `waybar`, and `zed`. Likely future packages, created
-only when their configuration is reviewed, are:
+The currently managed packages are `sway`, `swaylock`, `alacritty`, `brave`,
+`gtk`, `rofi`, `shell`, `tmux`, `waybar`, and `zed`. Likely future packages,
+created only when their configuration is reviewed, are:
 
 ```text
 git/       # ~/.gitconfig, if a portable configuration is desired
@@ -97,6 +101,8 @@ This repository was initialized on Fedora Linux 44 Sway Spin.
   ergonomic lock and screenshot-to-clipboard shortcuts.
 - The referenced wallpaper is not tracked. It is local data, so a fresh machine
   must supply that file or later replace the setting with a portable choice.
+- Swaylock uses the same local wallpaper and otherwise inherits its normal
+  behavior from Fedora's lock and idle integration.
 - Waybar uses a compact, monochrome user configuration. Fedora's defaults
   remain available under `/etc/xdg/waybar/` for reference.
 - Alacritty is the configured terminal. Foot remains installed with no user
@@ -246,9 +252,9 @@ To deploy all current packages, name them explicitly:
 
 ```bash
 stow --no --verbose=2 --target="$HOME" \
-  alacritty brave gtk rofi shell sway tmux waybar zed
+  alacritty brave gtk rofi shell sway swaylock tmux waybar zed
 stow --verbose=1 --target="$HOME" \
-  alacritty brave gtk rofi shell sway tmux waybar zed
+  alacritty brave gtk rofi shell sway swaylock tmux waybar zed
 ```
 
 Explicit package names keep restoration controlled and reviewable.
