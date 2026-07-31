@@ -1,4 +1,6 @@
 # Add Git branch and working-tree state to the Bash prompt.
+[[ $- == *i* ]] || return 0
+
 if [[ -r /usr/share/git-core/contrib/completion/git-prompt.sh ]]; then
     source /usr/share/git-core/contrib/completion/git-prompt.sh
 

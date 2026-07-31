@@ -1,0 +1,174 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+readonly packages=(
+    alacritty
+    brave
+    gtk
+    rofi
+    shell
+    sway
+    swaylock
+    tmux
+    waybar
+    zed
+)
+
+readonly fedora_packages=(
+    git
+    stow
+    sway
+    sway-config-fedora
+    sway-systemd
+    swaylock
+    alacritty
+    rofi
+    tmux
+    waybar
+    pavucontrol
+    nm-connection-editor
+    xdg-utils
+    grim
+    slurp
+    wl-clipboard
+)
+
+apply=false
+install=false
+
+usage() {
+    cat <<'EOF'
+Usage: scripts/bootstrap-fedora [--install] [--apply]
+
+Prepare this dotfiles repository on a Fedora Sway system.
+
+  --install  Ask DNF to install missing Fedora packages.
+  --apply    Deploy the Stow packages after a successful preview.
+  -h, --help Show this help.
+
+With no options, the script performs read-only checks and a Stow preview.
+It never resolves conflicts with --adopt or overwrites existing files.
+EOF
+}
+
+while (($#)); do
+    case $1 in
+        --apply)
+            apply=true
+            ;;
+        --install)
+            install=true
+            ;;
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        *)
+            printf 'Unknown option: %s\n\n' "$1" >&2
+            usage >&2
+            exit 2
+            ;;
+    esac
+    shift
+done
+
+if [[ ! -r /etc/os-release ]]; then
+    printf 'Cannot identify this operating system: /etc/os-release is missing.\n' >&2
+    exit 1
+fi
+
+source /etc/os-release
+if [[ ${ID:-} != fedora ]]; then
+    printf 'This script targets Fedora; detected %s.\n' "${PRETTY_NAME:-unknown}" >&2
+    exit 1
+fi
+
+readonly script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)
+readonly repo_dir=$(cd -- "${script_dir}/.." && pwd -P)
+readonly target_home=${HOME:?HOME is not set}
+
+printf 'System:     %s\n' "${PRETTY_NAME}"
+printf 'Repository: %s\n' "${repo_dir}"
+printf 'Target:     %s\n' "${target_home}"
+
+if ! command -v rpm >/dev/null; then
+    printf 'The Fedora rpm command is unavailable.\n' >&2
+    exit 1
+fi
+
+missing_packages=()
+for package in "${fedora_packages[@]}"; do
+    rpm -q "${package}" >/dev/null 2>&1 || missing_packages+=("${package}")
+done
+
+if ((${#missing_packages[@]})); then
+    printf '\nMissing Fedora packages:\n'
+    printf '  %s\n' "${missing_packages[@]}"
+
+    if [[ ${install} == true ]]; then
+        printf '\nDNF will show the proposed transaction for confirmation.\n'
+        sudo dnf install "${missing_packages[@]}"
+    else
+        printf '\nRe-run with --install to ask DNF to install them.\n'
+    fi
+else
+    printf '\nAll Fedora package dependencies are installed.\n'
+fi
+
+if ! command -v stow >/dev/null; then
+    printf '\nGNU Stow is required before deployment can be previewed.\n' >&2
+    exit 1
+fi
+
+printf '\nPreviewing Stow deployment:\n'
+if ! stow --no --verbose=2 --dir="${repo_dir}" --target="${target_home}" \
+    "${packages[@]}"; then
+    printf '\nStow found a conflict. No dotfiles were deployed.\n' >&2
+    printf 'Compare and back up the reported destination, then run this script again.\n' >&2
+    printf 'Do not use stow --adopt unless you intend to import those files.\n' >&2
+    exit 1
+fi
+
+if [[ ${apply} != true ]]; then
+    printf '\nPreview passed; no dotfiles were changed.\n'
+    printf 'Re-run with --apply to deploy the links.\n'
+    exit 0
+fi
+
+printf '\nDeploying Stow packages:\n'
+stow --verbose=1 --dir="${repo_dir}" --target="${target_home}" \
+    "${packages[@]}"
+
+printf '\nValidating deployed shell configuration:\n'
+bash -n \
+    "${repo_dir}/shell/.bash_profile" \
+    "${repo_dir}/shell/.bashrc" \
+    "${repo_dir}/shell/.bashrc.d/20-prompt.sh" \
+    "${repo_dir}/shell/.bashrc.d/30-aliases.sh"
+
+if command -v sway >/dev/null &&
+    command -v swaymsg >/dev/null &&
+    [[ -r ${target_home}/.config/sway/config ]] &&
+    swaymsg --type get_version >/dev/null 2>&1; then
+    printf 'Validating deployed Sway configuration:\n'
+    sway --validate --config "${target_home}/.config/sway/config"
+elif [[ -r ${target_home}/.config/sway/config ]]; then
+    printf 'Sway IPC is unavailable; run this after starting Sway:\n'
+    printf '  sway --validate --config "$HOME/.config/sway/config"\n'
+fi
+
+printf '\nBootstrap complete.\n'
+
+if [[ ! -e ${target_home}/Pictures/Wallpapers/wallhaven-vpyekp.jpg ]]; then
+    printf 'Reminder: supply ~/Pictures/Wallpapers/wallhaven-vpyekp.jpg '
+    printf 'or change the wallpaper settings.\n'
+fi
+
+if ! fc-match 'JetBrainsMono Nerd Font Mono' 2>/dev/null |
+    grep -Fq 'JetBrainsMonoNerdFont'; then
+    printf 'Reminder: install JetBrainsMono Nerd Font Mono for Alacritty and Rofi.\n'
+fi
+
+printf 'Review .bashrc.local.example before adding host-specific shell settings.\n'
+printf 'Brave and Zed themselves are installed separately from these dotfiles.\n'

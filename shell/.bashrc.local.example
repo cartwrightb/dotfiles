@@ -1,0 +1,8 @@
+# Copy the settings needed on this host to ~/.bashrc.local. That file is
+# intentionally ignored by the dotfiles repository.
+
+# Example: manage a host-specific libvirt VM.
+# export LIBVIRT_DEFAULT_URI=qemu:///system
+# alias rocky-start='virsh start rocky9-dev'
+# alias rocky-stop='virsh shutdown rocky9-dev'
+# alias rocky-console='virsh console rocky9-dev'

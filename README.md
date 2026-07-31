@@ -36,6 +36,8 @@ dotfiles/
 │           └── theme.rasi
 ├── shell/
 │   ├── .bash_profile
+│   ├── .bashrc
+│   ├── .bashrc.local.example
 │   └── .bashrc.d/
 │       ├── 20-prompt.sh
 │       └── 30-aliases.sh
@@ -110,10 +112,14 @@ This repository was initialized on Fedora Linux 44 Sway Spin.
 - Alacritty and Rofi use `JetBrainsMono Nerd Font Mono`, installed separately
   as a user-local font because Fedora's JetBrains Mono package is not the
   icon-patched Nerd Font variant.
-- Bash keeps Fedora's standard startup behavior. The managed `.bash_profile`
-  additionally starts Fedora's `start-sway` launcher after a login on TTY 1;
-  graphical, SSH, and other TTY sessions are left alone. Small prompt and
-  alias fragments are managed under `~/.bashrc.d`; `ll` expands to `ls -lah`.
+- Bash keeps Fedora's standard startup behavior through the managed `.bashrc`.
+  The managed `.bash_profile` additionally starts Fedora's `start-sway`
+  launcher after a login on TTY 1; graphical, SSH, and other TTY sessions are
+  left alone. Small prompt and alias fragments are managed under
+  `~/.bashrc.d`; `ll` expands to `ls -lah`. Host-specific settings belong in
+  the untracked `~/.bashrc.local`; `.bashrc.local.example` documents the local
+  libvirt pattern without committing a machine-specific VM name as active
+  configuration.
 - GTK applications use the built-in dark Adwaita variant. The package records
   both the GTK 3 preference and a user `environment.d` override because an
   XSettings source can otherwise override `settings.ini` in a Sway session.
@@ -195,6 +201,8 @@ Required by the current managed configuration:
 - JetBrainsMono Nerd Font Mono, installed as a user-local font
 - `pavucontrol`, `nm-connection-editor`, and `xdg-utils` for
   Waybar's click actions
+- `grim`, `slurp`, and `wl-clipboard` for screenshot capture and clipboard
+  integration
 - the utilities required or recommended by Fedora's Sway snippets, normally
   supplied by the Sway Spin
 
@@ -205,7 +213,7 @@ Check availability without changing the system:
 
 ```bash
 rpm -q git stow sway sway-config-fedora sway-systemd alacritty rofi tmux waybar \
-  pavucontrol nm-connection-editor xdg-utils
+  pavucontrol nm-connection-editor xdg-utils grim slurp wl-clipboard
 ```
 
 Install or system-bootstrap commands are intentionally not automated. Review
@@ -218,9 +226,38 @@ intended `~/repos/dotfiles`:
 
 ```bash
 mkdir -p "$HOME/repos"
-git clone <repository-url> "$HOME/repos/dotfiles"
+git clone git@github.com:cartwrightb/dotfiles.git "$HOME/repos/dotfiles"
 cd "$HOME/repos/dotfiles"
 ```
+
+### Scripted bootstrap
+
+From the cloned repository, run the bootstrap script without options first:
+
+```bash
+./scripts/bootstrap-fedora
+```
+
+The default run is read-only: it checks Fedora package dependencies and
+previews every Stow package. It stops on existing-file conflicts and never
+uses `stow --adopt`. To ask DNF to install missing Fedora packages, use:
+
+```bash
+./scripts/bootstrap-fedora --install
+```
+
+DNF still presents its transaction for confirmation. Once the preview is
+clean, deploy and validate the configuration with:
+
+```bash
+./scripts/bootstrap-fedora --apply
+```
+
+Both flags may be supplied together on a new Fedora Sway installation. Brave,
+Zed, the Nerd Font, the local wallpaper, private data, and host-specific files
+remain deliberate follow-up steps; the script reports reminders for them.
+
+### Manual deployment
 
 Inspect the destination before deployment:
 
