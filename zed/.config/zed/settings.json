@@ -7,6 +7,8 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "agent_buffer_font_size": 13.0,
+  "agent_ui_font_size": 15.0,
   "cli_default_open_behavior": "existing_window",
   "git_panel": {
     "dock": "left"
@@ -36,8 +38,8 @@
       "type": "registry"
     }
   },
-  "ui_font_size": 15.0,
-  "buffer_font_size": 13.0,
+  "ui_font_size": 13.0,
+  "buffer_font_size": 12.5,
   "theme": {
     "mode": "dark",
     "light": "One Light",

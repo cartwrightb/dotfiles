@@ -27,6 +27,10 @@ set $menu rofi -show combi
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 # Requires: desktop-backgrounds-compat, swaybg, jxl-pixbuf-loader
 output * bg ~/Pictures/Wallpapers/wallhaven-vpyekp.jpg fill
+
+# Centre the laptop display beneath the external ultrawide when it is connected.
+output DP-3 position 0 0
+output eDP-1 position 760 1440
 #
 # Example configuration:
 #
