@@ -29,7 +29,8 @@ set $menu rofi -show combi
 output * bg ~/Pictures/Wallpapers/wallhaven-vpyekp.jpg fill
 
 # Centre the laptop display beneath the external ultrawide when it is connected.
-output DP-3 position 0 0
+# Match its EDID identity because the DP connector name can change between docks.
+output "Philips Consumer Electronics Company PHL 345B1C UK02447034844" position 0 0
 output eDP-1 position 760 1440
 #
 # Example configuration:
@@ -70,6 +71,9 @@ input type:keyboard {
 input type:touchpad {
     natural_scroll enabled
     scroll_factor 0.5
+}
+input "1267:17099:ELAN2514:00_04F3:42CB" {
+    events disabled
 }
 
 ### Window colours
